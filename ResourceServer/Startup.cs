@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System;
 using System.Collections.Generic;
@@ -33,33 +35,33 @@ namespace ResourceServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,options =>
-            {
-                options.Authority = "https://login.microsoftonline.com/d5adcdd3-1734-4b15-8b0c-2df9f26e9aa2";
-                options.RequireHttpsMetadata = true;
+            services.AddAuthentication(AzureADDefaults.JwtBearerAuthenticationScheme)
+                .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,options =>
+            //{
+            //    options.Authority = "https://login.microsoftonline.com/d5adcdd3-1734-4b15-8b0c-2df9f26e9aa2";
+            //    options.RequireHttpsMetadata = true;
 
-                var clientSecret = "";
-                var clientId = "";
-                var tenantId = "";
+            //    var clientSecret = "";
+            //    var clientId = "";
+            //    var tenantId = "";
 
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidAudience = clientId,
-                    ValidIssuer = $"https://sts.windows.net/{tenantId}/",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(clientSecret)),
-                    ValidateIssuer = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidateLifetime = true,
-                    ValidateAudience = true,
-                    ClockSkew = TimeSpan.Zero
-            };
-                
-                
-            });
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidAudience = clientId,
+            //        ValidIssuer = $"https://sts.windows.net/{tenantId}/",
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(clientSecret)),
+            //        ValidateIssuer = true,
+            //        ValidateIssuerSigningKey = true,
+            //        ValidateLifetime = true,
+            //        ValidateAudience = true,
+            //        ClockSkew = TimeSpan.Zero
+            //};
+            //});
 
             services.AddAuthorization();
         }
