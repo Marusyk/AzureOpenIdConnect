@@ -1,1 +1,1 @@
-# AzureOpenIdConnect
+# Azure OpenId Connect
