@@ -43,7 +43,7 @@ namespace ResourceServer
             //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             //}).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,options =>
             //{
-            //    options.Authority = "https://login.microsoftonline.com/d5adcdd3-1734-4b15-8b0c-2df9f26e9aa2";
+            //    options.Authority = "https://login.microsoftonline.com/";
             //    options.RequireHttpsMetadata = true;
 
             //    var clientSecret = "";
